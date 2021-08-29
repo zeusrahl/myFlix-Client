@@ -2,8 +2,9 @@
   "name": "myflix-client",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.html",
   "scripts": {
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +16,12 @@
   "bugs": {
     "url": "https://github.com/zeusrahl/myFlix-Client/issues"
   },
-  "homepage": "https://github.com/zeusrahl/myFlix-Client#readme"
+  "homepage": "https://github.com/zeusrahl/myFlix-Client#readme",
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.0.0-rc.0"
+  }
 }
