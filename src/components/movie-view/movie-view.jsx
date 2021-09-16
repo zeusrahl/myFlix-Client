@@ -1,6 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export class MovieView extends React.Component {
+
+  keypressCallback(event) {
+    console.log(event.key);
+  }
+  
+  componentDidMount() {
+    document.addEventListener('keypress', this.keypressCallback);
+  }
+
+  // componentWillUnmount() {
+  //   document.removeEventListener('keypress', this.keypressCallback);
+  // }
+
   render() {
     const { movie, onBackClick } = this.props;
 
@@ -25,8 +39,21 @@ export class MovieView extends React.Component {
           <span className="label">Director: </span>
           <span className="value">{movie.Director}</span>
         </div>
-        <button onClick={() => { onBackClick(null); }}>Back</button>
+
+        <button onClick={() => { onBackClick(null); }}>
+          Back
+          </button>
       </div>
     );
   }
+}
+
+MovieView.propTypes = {
+  movieData: PropTypes.shape({
+    Title: PropTypes.string.isRequired,
+    Description: PropTypes.string.isRequired,
+    ImagePath: PropTypes.string.isRequired,
+    Genre: PropTypes.array.isRequired,
+    Director: PropTypes.array.isRequired,
+  }),
 }
