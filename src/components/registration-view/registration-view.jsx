@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import './registration-view.scss';
+import { Form } from 'react-bootstrap';
+
 export function RegistrationView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -14,31 +17,61 @@ export function RegistrationView(props) {
   }
 
   return (
-    <form>
-      <label>
-        Username:
-        <input 
-          type='text' 
-          value={username} 
+    /* 
+    <Form>
+      <Form.Group controlId="formUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control 
+          type="text" 
           onChange={e => setUsername(e.target.value)} 
         />
-      </label>
-      <label>
-        Password:
-        <input 
-          type='text' 
-          value={password} 
-          onChange={e => setPassword(e.target.value)} 
+      </Form.Group>
+
+      <Form.Group controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control 
+          type="text" 
+          onChange={e => setPassword(e.target.value)} />
+      </Form.Group>"
+      <Buton 
+        variant="primary" 
+        type="submit" 
+        onClick={handleSubmit}>
+        Submit
+      </Buton>
+    </Form>
+    */
+    <Form>
+      <Form.Group controlId="formUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control 
+          type="text"
+          onChange={e => setUsername(e.target.value)}
         />
-      </label>
-      <label>
-        e-mail:
-        <input 
-          type='text' 
-          value={email} 
-          onChange={e => setEmail(e.target.value)} 
+      </Form.Group>
+      <Form.Group controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control 
+          type="text"
+          onChange={e => setPassword(e.target.value)}
         />
-      </label>
+      </Form.Group>
+      <Form.Group controlId="formEmail">
+        <Form.Label>Email:</Form.Label>
+        <Form.Control 
+          type="text"
+          onChange={e => setEmail(e.target.value)}
+        />
+      </Form.Group>
+      <Form.Group controlId="formBirthDate">
+        <Form.Label>Birthday:</Form.Label>
+        <Form.Control
+          type="text"
+          onChange={e => setBirthDate(e.target.value)}
+        />
+      </Form.Group>
+    </Form>
+    /* <form>
       <label>
         Birthday:
         <input 
@@ -51,7 +84,7 @@ export function RegistrationView(props) {
       <button type="submit" onClick={handleSubmit}>
         Submit
       </button>
-    </form>
+    </form> */
   );
 }
 
