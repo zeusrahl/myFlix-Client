@@ -8,4 +8,4 @@ export function Button({label}) {
       <button className="super-button">{label}</button>;
     </Button>
     );   
-  }
+  };

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 import './login-view.scss';
 import Form from 'react-bootstrap/Form';
@@ -11,11 +13,19 @@ export function LoginView(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(username, password);
     /* Send a request to the server for authentication */
-    /* then call props.onLoggedIn(username) */
-    props.onLoggedIn(username);
-  }
+    axios.post('https://favflix.herokuapp.com/login', {
+      Username: username,
+      Password: password
+    })
+    .then(response => {
+      const data = response.data;
+      props.onLoggedIn(data);
+    })
+    .catch(e => {
+      console.log('no such user')
+    });
+  };  
 
   return (
     <Form>
@@ -23,6 +33,8 @@ export function LoginView(props) {
         <Form.Label>Username:</Form.Label>
         <Form.Control
           type="text"
+          placeholder="Enter Username"
+          value={username}
           onChange={e => setUsername(e.target.value)}
         />
       </Form.Group>
@@ -30,13 +42,23 @@ export function LoginView(props) {
       <Form.Group controlId="formPassword">
         <Form.Label>Password:</Form.Label>
         <Form.Control
-          type="text"
+          type="password"
+          placeholder="Password"
+          value={password}
           onChange={e => setPassword(e.target.value)}
         />
+        <Form.Control.Feedback>Welcome Back!</Form.Control.Feedback>
+        <Form.Control.Feedback type='invalid'>Incorrect Password, please try again.</Form.Control.Feedback>
       </Form.Group>
-      <Button variant="primary" type="submit" onClick={handleSubmit}>
-        Submit
-      </Button>
+      <span>
+        <Button variant="primary" type="submit" onClick={handleSubmit}>
+          Log In
+        </Button>
+        {' '}
+        <Link to={`/register`}>
+          <Button variant='success link'>Register</Button>
+        </Link>
+      </span>
     </Form>
   );
 }
