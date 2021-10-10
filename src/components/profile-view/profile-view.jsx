@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { Button, Card, CardDeck, Form, Row } from 'react-bootstrap';
-import { Link } from "react-router-dom";
-
 import './profile-view.scss';
 
 export class ProfileView extends React.Component {
@@ -11,6 +9,7 @@ export class ProfileView extends React.Component {
     super();
 
     this.state = {
+
       Username: null,
       Password: null,
       Email: null,
@@ -27,6 +26,7 @@ export class ProfileView extends React.Component {
     }
   }
 
+
   // get user method
   getUser(token) {
     const username = localStorage.getItem('user');
@@ -35,6 +35,7 @@ export class ProfileView extends React.Component {
     })
     .then((response) => {
       this.setState({
+
         Username: response.data.Username,
         Password: response.data.Password,
         Email: response.data.Email,
@@ -42,25 +43,29 @@ export class ProfileView extends React.Component {
         FavoriteMovies: response.data.FavoriteMovies,
       });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log(error);
     });
   }
+
 
   removeFavoriteMovie() {
     const token = localStorage.getItem('token');
     const username = localStorage.getItem('user');
 
-    axios.delete(`https://favflix.herokuapp.com/users/${username}/movies/${movie._id}`, {
+
+    axios
+      .delete(`https://favflix.herokuapp.com/users/${username}/movies/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    then(() => {
+    .then(() => {
       alert('Movie was removed');
       this.componentDidMount();
     })
     .catch(function (error) {
       console.log(error);
     })
+    // .then(() => window.location.reload());
   }
 
   handleUpdate(e, newUsername, newPassword, newEmail, newBirthday) {
@@ -85,6 +90,7 @@ export class ProfileView extends React.Component {
     axios.put(`https://favflix.herokuapp.com/users/${username}`, {
       headers: { Authorization: `Bearer ${token}` },
       data: {
+
         Username: newUsername ? newUsername: this.state.Username,
         Password: newPassword ? newPassword: this.state.Password,
         Email: newEmail ? newEmail: this.state.Email,
@@ -94,6 +100,7 @@ export class ProfileView extends React.Component {
     .then((response) => {
       alert('Saved Changes');
       this.setState({
+
         Username: response.data.Username,
         Password: response.data.Password,
         Email: response.data.Email,
@@ -106,6 +113,9 @@ export class ProfileView extends React.Component {
       console.log(error);
     });
   }
+
+
+
 
   setUsername(input) {
     this.Username = input;
