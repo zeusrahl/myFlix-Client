@@ -22927,9 +22927,7 @@ class MainView extends _reactDefault.default.Component {
         // Initial state is set to null
         this.state = {
             movies: [],
-            selectedMovie: null,
-            user: null,
-            register: false
+            user: null
         };
     }
     componentDidMount() {
@@ -22941,12 +22939,7 @@ class MainView extends _reactDefault.default.Component {
             this.getMovies(accessToken);
         }
     }
-    /* When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/ // setSelectedMovie(newSelectedMovie) {
-    //   this.setState({
-    //     selectedMovie: newSelectedMovie
-    //   });
-    // }
-    /* When a user successfully logs in, this function updates the `user` property in state to that *particular user */ onLoggedIn(authData) {
+    onLoggedIn(authData) {
         console.log(authData);
         this.setState({
             user: authData.user.Username
@@ -22969,13 +22962,6 @@ class MainView extends _reactDefault.default.Component {
             console.log(error);
         });
     }
-    // onLoggedOut() {
-    //   localStorage.removeItem('token');
-    //   localStorage.removeItem('user');
-    //   this.setState({
-    //     user: null
-    //   });
-    // }
     onRegistration(register) {
         this.setState({
             register: register
@@ -22996,16 +22982,12 @@ class MainView extends _reactDefault.default.Component {
         });
     }
     render() {
-        const { movies , selectedMovie , register , user  } = this.state;
+        const { movies , user  } = this.state;
         console.log('render', user);
-        // if (!register) return <RegistrationView onRegistration={register => this.onRegistration(register)} />;
-        /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView */ // if (selectedMovie) return <MovieView movie={selectedMovie} />
-        // Before the movies have been loaded
-        // if (!movies) return <div className="main-view"/>
         return(/*#__PURE__*/ _jsxRuntime.jsxs(_reactRouterDom.BrowserRouter, {
             __source: {
                 fileName: "src/components/main-view/main-view.jsx",
-                lineNumber: 124
+                lineNumber: 94
             },
             __self: this,
             children: [
@@ -23013,14 +22995,7 @@ class MainView extends _reactDefault.default.Component {
                     user: user,
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 125
-                    },
-                    __self: this
-                }),
-                /*#__PURE__*/ _jsxRuntime.jsx(_rowDefault.default, {
-                    __source: {
-                        fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 126
+                        lineNumber: 95
                     },
                     __self: this
                 }),
@@ -23028,7 +23003,7 @@ class MainView extends _reactDefault.default.Component {
                     className: "main-view justify-content-md-center",
                     __source: {
                         fileName: "src/components/main-view/main-view.jsx",
-                        lineNumber: 129
+                        lineNumber: 97
                     },
                     __self: this,
                     children: [
@@ -23054,7 +23029,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 131
+                                lineNumber: 99
                             },
                             __self: this
                         }),
@@ -23071,7 +23046,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 152
+                                lineNumber: 111
                             },
                             __self: this
                         }),
@@ -23085,7 +23060,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 159
+                                lineNumber: 118
                             },
                             __self: this
                         }),
@@ -23111,7 +23086,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 165
+                                lineNumber: 124
                             },
                             __self: this
                         }),
@@ -23137,7 +23112,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 175
+                                lineNumber: 134
                             },
                             __self: this
                         }),
@@ -23163,7 +23138,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 186
+                                lineNumber: 145
                             },
                             __self: this
                         }),
@@ -23182,7 +23157,7 @@ class MainView extends _reactDefault.default.Component {
                             },
                             __source: {
                                 fileName: "src/components/main-view/main-view.jsx",
-                                lineNumber: 197
+                                lineNumber: 156
                             },
                             __self: this
                         })
@@ -40551,8 +40526,8 @@ class ProfileView extends _reactDefault.default.Component {
     }
     // get user method
     getUser(token) {
-        const username = localStorage.getItem('user');
-        _axiosDefault.default.get(`https://favflix.herokuapp.com/users/${username}`, {
+        const user = localStorage.getItem('user');
+        _axiosDefault.default.get(`https://favflix.herokuapp.com/users/${user}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -40570,8 +40545,8 @@ class ProfileView extends _reactDefault.default.Component {
     }
     removeFavoriteMovie() {
         const token = localStorage.getItem('token');
-        const username = localStorage.getItem('user');
-        _axiosDefault.default.delete(`https://favflix.herokuapp.com/users/${username}/movies/${movie._id}`, {
+        const user = localStorage.getItem('user');
+        _axiosDefault.default.delete(`https://favflix.herokuapp.com/users/${user}/movies/${movie._id}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -40598,8 +40573,8 @@ class ProfileView extends _reactDefault.default.Component {
         }
         e.preventDefault();
         const token = localStorage.getItem('token');
-        const username = localStorage.getItem('user');
-        _axiosDefault.default.put(`https://favflix.herokuapp.com/users/${username}`, {
+        const user = localStorage.getItem('user');
+        _axiosDefault.default.put(`https://favflix.herokuapp.com/users/${user}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             },
@@ -40618,7 +40593,7 @@ class ProfileView extends _reactDefault.default.Component {
                 Birthday: response.data.Birthday
             });
             localStorage.setItem('user', this.state.Username);
-            window.open(`/users/${username}`, '_self');
+            window.open(`/users/${user}`, '_self');
         }).catch(function(error) {
             console.log(error);
         });
@@ -40638,8 +40613,8 @@ class ProfileView extends _reactDefault.default.Component {
     handleDeleteUser(e) {
         e.preventDefault();
         const token = localStorage.getItem('token');
-        const username = localStorage.getItem('user');
-        _axiosDefault.default.delete(`https://favflix.herokuapp.com/users/${username}`, {
+        const user = localStorage.getItem('user');
+        _axiosDefault.default.delete(`https://favflix.herokuapp.com/users/${user}`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }

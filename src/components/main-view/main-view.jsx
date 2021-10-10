@@ -25,9 +25,7 @@ export class MainView extends React.Component {
   // Initial state is set to null
     this.state = {
       movies: [],
-      selectedMovie: null,
       user: null,
-      register: false
     };
   }
 
@@ -40,15 +38,6 @@ export class MainView extends React.Component {
       this.getMovies(accessToken);
     }
   }
-  
-  /* When a movie is clicked, this function is invoked and updates the state of the `selectedMovie` *property to that movie*/
-  // setSelectedMovie(newSelectedMovie) {
-  //   this.setState({
-  //     selectedMovie: newSelectedMovie
-  //   });
-  // }
-
-  /* When a user successfully logs in, this function updates the `user` property in state to that *particular user */
 
   onLoggedIn(authData) {
     console.log(authData);
@@ -76,14 +65,6 @@ export class MainView extends React.Component {
     });
   }
 
-  // onLoggedOut() {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('user');
-  //   this.setState({
-  //     user: null
-  //   });
-  // }
-
   onRegistration(register) {
     this.setState({
       register: register,
@@ -106,26 +87,13 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const {movies, selectedMovie, register, user } = this.state;
+    const {movies, user } = this.state;
     console.log('render', user);
-
-    // if (!register) return <RegistrationView onRegistration={register => this.onRegistration(register)} />;
-
-    /* If there is no user, the LoginView is rendered. If there is a user logged in, the user details are *passed as a prop to the LoginView */
-    
-    // if (selectedMovie) return <MovieView movie={selectedMovie} />
-
-    // Before the movies have been loaded
-    
-
-    // if (!movies) return <div className="main-view"/>
 
     return (
       <Router>
         <NavBar user={user} />
-        <Row>
-          {/* Link to Profile */}
-        </Row>
+
         <Row className="main-view justify-content-md-center">
 
           <Route exact path="/" render={() => {
@@ -139,15 +107,6 @@ export class MainView extends React.Component {
               </Col>
             ))  
           }} />
-          
-          {/* <Route exact path='/' render={() => {
-            if (!user) return <div className="main-view" />;
-            return <Col>
-              <Button variant='primary' onClick={() => { this.onLoggedOut() }}>
-                Log Out
-              </Button>
-            </Col>
-          }} /> */}
 
           <Route path="/users" render={() => {
             if (user) return <Redirect to="/" />
@@ -199,17 +158,7 @@ export class MainView extends React.Component {
             if (movies.length ===0) return;
             return <ProfileView history={history} movies={movies} />
           }} />
-
-          {/* <Route exact path='/' render={() => {
-            if (user) return
-            <Button variant='primary' onClick={() => { this.onLoggedOut() }}>
-              Log Out
-            </Button>
-          }} /> */}
           
-           {/* <Col>
-            <button onClick={() => { this.onLoggedOut() }}>Logout</button>
-          </Col> */}
         </Row>
       </Router>
       

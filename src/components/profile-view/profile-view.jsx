@@ -28,8 +28,8 @@ export class ProfileView extends React.Component {
 
   // get user method
   getUser(token) {
-    const username = localStorage.getItem('user');
-    axios.get(`https://favflix.herokuapp.com/users/${username}`, {
+    const user = localStorage.getItem('user');
+    axios.get(`https://favflix.herokuapp.com/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((response) => {
@@ -49,11 +49,11 @@ export class ProfileView extends React.Component {
 
   removeFavoriteMovie() {
     const token = localStorage.getItem('token');
-    const username = localStorage.getItem('user');
+    const user = localStorage.getItem('user');
 
 
     axios
-      .delete(`https://favflix.herokuapp.com/users/${username}/movies/${movie._id}`, {
+      .delete(`https://favflix.herokuapp.com/users/${user}/movies/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(() => {
@@ -83,9 +83,9 @@ export class ProfileView extends React.Component {
     e.preventDefault();
 
     const token = localStorage.getItem('token');
-    const username = localStorage.getItem('user');
+    const user = localStorage.getItem('user');
 
-    axios.put(`https://favflix.herokuapp.com/users/${username}`, {
+    axios.put(`https://favflix.herokuapp.com/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` },
       data: {
         Username: newUsername ? newUsername: this.state.Username,
@@ -103,7 +103,7 @@ export class ProfileView extends React.Component {
         Birthday: response.data.Birthday,
       });
       localStorage.setItem('user', this.state.Username);
-      window.open(`/users/${username}`, '_self');
+      window.open(`/users/${user}`, '_self');
     })
     .catch(function (error) {
       console.log(error);
@@ -130,9 +130,9 @@ export class ProfileView extends React.Component {
     e.preventDefault();
 
     const token = localStorage.getItem('token');
-    const username = localStorage.getItem('user');
+    const user = localStorage.getItem('user');
 
-    axios.delete(`https://favflix.herokuapp.com/users/${username}`, {
+    axios.delete(`https://favflix.herokuapp.com/users/${user}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(() => {
