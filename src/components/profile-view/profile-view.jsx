@@ -9,7 +9,6 @@ export class ProfileView extends React.Component {
     super();
 
     this.state = {
-
       Username: null,
       Password: null,
       Email: null,
@@ -35,7 +34,6 @@ export class ProfileView extends React.Component {
     })
     .then((response) => {
       this.setState({
-
         Username: response.data.Username,
         Password: response.data.Password,
         Email: response.data.Email,
@@ -90,7 +88,6 @@ export class ProfileView extends React.Component {
     axios.put(`https://favflix.herokuapp.com/users/${username}`, {
       headers: { Authorization: `Bearer ${token}` },
       data: {
-
         Username: newUsername ? newUsername: this.state.Username,
         Password: newPassword ? newPassword: this.state.Password,
         Email: newEmail ? newEmail: this.state.Email,
@@ -100,7 +97,6 @@ export class ProfileView extends React.Component {
     .then((response) => {
       alert('Saved Changes');
       this.setState({
-
         Username: response.data.Username,
         Password: response.data.Password,
         Email: response.data.Email,
@@ -113,9 +109,6 @@ export class ProfileView extends React.Component {
       console.log(error);
     });
   }
-
-
-
 
   setUsername(input) {
     this.Username = input;
@@ -168,7 +161,7 @@ export class ProfileView extends React.Component {
               {FavoriteMovies.length > 0 && movies.map((movie) => {
                 if (movie._id === FavoriteMovies.find((favMovie) => favMovie === movie._id)) {
                   return (
-                    <CardDeck classname='movie-card-deck'>
+                    <CardDeck className='movie-card-deck'>
                       <Card className='favorites-item card-content' style={{ width: '16rem' }} key={movie._id}>
                         <Card.Img style={{ width: '18rem' }} className='movieCard' variant='top' src={movie.ImagePath} />
                         <Card.Body>
@@ -190,24 +183,24 @@ export class ProfileView extends React.Component {
             <Form noValidate validated={validated} className='update-form' onSubmit={(e) => this.handleUpdate(e, this.Username, this.Password, this.Email, this.Birthday)}>
 
               <Form.Group controlId='formBasicUsername'>
-                <Form.Label classname='form-label'>Username</Form.Label>
+                <Form.Label className='form-label'>Username</Form.Label>
                 <Form.Control type='text' placeholder='Change Username' onChange={(e) => this.setUsername(e.target.value)} />
               </Form.Group>
 
               <Form.Group controlId='formBasicPassword'>
-                <Form.Label classname='form-label'>
+                <Form.Label className='form-label'>
                   Username<span className='required'>*</span>
                 </Form.Label>
                 <Form.Control type='password' placeholder='New Password' onChange={(e) => this.setPassword(e.target.value)} />
               </Form.Group>
 
               <Form.Group controlId='formBasicEmail'>
-                <Form.Label classname='form-label'>Email</Form.Label>
+                <Form.Label className='form-label'>Email</Form.Label>
                 <Form.Control type='email' placeholder='Change Email' onChange={(e) => this.setEmail(e.target.value)} />
               </Form.Group>
 
               <Form.Group controlId='formBasicBirthday'>
-                <Form.Label classname='form-label'>Birthday</Form.Label>
+                <Form.Label className='form-label'>Birthday</Form.Label>
                 <Form.Control type='date' placeholder='Change Birthday' onChange={(e) => this.setBirthday(e.target.value)} />
               </Form.Group>
 

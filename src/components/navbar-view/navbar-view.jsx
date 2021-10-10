@@ -44,7 +44,7 @@ export class NavBar extends React.Component {
             </NavLink>
 
           </Nav>
-          <Form inline>
+          <Form>
             <FormControl type='text' placeholder="Search" />
           </Form>
         </Navbar.Collapse>
