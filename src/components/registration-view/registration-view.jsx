@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 import './registration-view.scss';
 import { Form, Row } from 'react-bootstrap';
@@ -10,12 +11,12 @@ export function RegistrationView(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [birthDate, setBirthDate] = useState('');
+  const [birthday, setBirthday] = useState('');
 
   const [usernameError, setUsernameError] = useState({});
   const [passwordError, setPasswordError] = useState({});
   const [emailError, setEmailError] = useState({});
-  const [birthdateError, setBirthdateError] = useState({});
+  const [birthdayError, setBirthdayError] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -42,7 +43,7 @@ export function RegistrationView(props) {
     let usernameError = {};
     let passwordError = {};
     let emailError = {};
-    let birthdateError = {};
+    let birthdayError = {};
     let isValid = true;
 
     if (username.trim().length < 4) {
@@ -57,15 +58,15 @@ export function RegistrationView(props) {
       emailError.emailNotEmail = 'Email address incorrect.';
       isValid = false;
     }
-    if (birthdate === '') {
-      birthdateError.birthdateEmpty = 'Please enter your birthdate.';
+    if (birthday === '') {
+      birthdayError.birthdayEmpty = 'Please enter your birthday.';
       isValid = false;
     }
 
     setUsernameError(usernameError);
     setPasswordError(passwordError);
     setEmailError(emailError);
-    setBirthdateError(birthdateError);
+    setBirthdayError(birthdayError);
     return isValid;
   };
 
@@ -126,17 +127,17 @@ export function RegistrationView(props) {
       </Row>
 
       <Row>
-        <Form.Group controlId="formBirthDate">
+        <Form.Group controlId="formBirthday">
           <Form.Label>Birthday:</Form.Label>
           <Form.Control
             type="date"
-            value={birthdate}
-            onChange={e => setBirthDate(e.target.value)}
+            value={birthday}
+            onChange={e => setBirthday(e.target.value)}
           />
-          {Object.keys(birthdateError).map((key) => {
+          {Object.keys(birthdayError).map((key) => {
             return (
               <div key={key}>
-                {birthdateError[key]}
+                {birthdayError[key]}
               </div>
             );
           })}
@@ -161,6 +162,6 @@ RegistrationView.propTypes = {
     Username: PropTypes.string.isRequired,
     Password: PropTypes.string.isRequired,
     Email: PropTypes.string.isRequired,
-    Birthdate: PropTypes.string.isRequired
+    Birthday: PropTypes.string.isRequired
   }),
 };

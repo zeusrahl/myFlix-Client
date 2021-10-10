@@ -12,9 +12,11 @@ import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view'
 import { RegistrationView } from '../registration-view/registration-view';
 import { ProfileView } from '../profile-view/profile-view';
+import { NavBar } from '../navbar-view/navbar-view';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 export class MainView extends React.Component {
   
@@ -120,6 +122,10 @@ export class MainView extends React.Component {
 
     return (
       <Router>
+        <NavBar user={user} />
+        <Row>
+          {/* Link to Profile */}
+        </Row>
         <Row className="main-view justify-content-md-center">
 
           <Route exact path="/" render={() => {
@@ -133,15 +139,24 @@ export class MainView extends React.Component {
               </Col>
             ))  
           }} />
+          
+          {/* <Route exact path='/' render={() => {
+            if (!user) return <div className="main-view" />;
+            return <Col>
+              <Button variant='primary' onClick={() => { this.onLoggedOut() }}>
+                Log Out
+              </Button>
+            </Col>
+          }} /> */}
 
-          <Route path="/register" render={() => {
+          <Route path="/users" render={() => {
             if (user) return <Redirect to="/" />
             return <Col>
               <RegistrationView />
             </Col>
           }} />
 
-          <Route path="/profile" render={() => {
+          <Route path="/users/:Username" render={() => {
             if (!user) return <Col>
               <ProfileView />
             </Col>
@@ -157,7 +172,7 @@ export class MainView extends React.Component {
             </Col>
           }} />
 
-          <Route path="/directors/:name" render={({ match, history }) => {
+          <Route path="/director/:name" render={({ match, history }) => {
             if (!user) return <Col>
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
@@ -179,16 +194,25 @@ export class MainView extends React.Component {
             }
           } />
 
-          <Route exact path='/users/:username' render={({ history}) => {
+          <Route exact path='/users/:Username' render={({ history}) => {
             if (!user) return <LoginView onLoggedIn={(data) => this.onLoggedIn(data)} />;
             if (movies.length ===0) return;
             return <ProfileView history={history} movies={movies} />
           }} />
+
+          {/* <Route exact path='/' render={() => {
+            if (user) return
+            <Button variant='primary' onClick={() => { this.onLoggedOut() }}>
+              Log Out
+            </Button>
+          }} /> */}
+          
            {/* <Col>
             <button onClick={() => { this.onLoggedOut() }}>Logout</button>
           </Col> */}
         </Row>
       </Router>
+      
     );
   }
 }
