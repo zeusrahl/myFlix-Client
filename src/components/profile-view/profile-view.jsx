@@ -144,7 +144,7 @@ export class ProfileView extends React.Component {
   }
 
   render() {
-    const { FavoriteMovies, validate } = this.state;
+    const { FavoriteMovies, validated } = this.state;
     const { movies } = this.props;
 
     return (
@@ -177,7 +177,7 @@ export class ProfileView extends React.Component {
 
           <h1 className='section'>Update Profile</h1>
           <Card.Body>
-            <Form noValidate validate={validated} className='update-form' onSubmit={(e) => this.handleUpdate(e, this.Username, this.Password, this.Email, this.Birthday)}>
+            <Form noValidate validated={validated} className='update-form' onSubmit={(e) => this.handleUpdate(e, this.Username, this.Password, this.Email, this.Birthday)}>
 
               <Form.Group controlId='formBasicUsername'>
                 <Form.Label classname='form-label'>Username</Form.Label>

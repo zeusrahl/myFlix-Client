@@ -40655,7 +40655,7 @@ class ProfileView extends _reactDefault.default.Component {
         });
     }
     render() {
-        const { FavoriteMovies , validate  } = this.state;
+        const { FavoriteMovies , validated  } = this.state;
         const { movies  } = this.props;
         return(/*#__PURE__*/ _jsxRuntime.jsx(_reactBootstrap.Row, {
             className: "profile-view",
@@ -40792,7 +40792,7 @@ class ProfileView extends _reactDefault.default.Component {
                         __self: this,
                         children: /*#__PURE__*/ _jsxRuntime.jsxs(_reactBootstrap.Form, {
                             noValidate: true,
-                            validate: validated,
+                            validated: validated,
                             className: "update-form",
                             onSubmit: (e)=>this.handleUpdate(e, this.Username, this.Password, this.Email, this.Birthday)
                             ,
