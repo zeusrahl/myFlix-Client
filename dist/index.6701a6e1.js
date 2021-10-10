@@ -40563,7 +40563,7 @@ class ProfileView extends _reactDefault.default.Component {
                 Username: response.data.Username,
                 Password: response.data.Password,
                 Email: response.data.Email,
-                Birthdate: response.data.Birthdate,
+                Birthday: response.data.Birthday,
                 FavoriteMovies: response.data.FavoriteMovies
             });
         }).catch(function(error) {
@@ -40634,7 +40634,7 @@ class ProfileView extends _reactDefault.default.Component {
     setEmail(input) {
         this.Email = input;
     }
-    setBirthdate(input) {
+    setBirthday(input) {
         this.Birthday = input;
     }
     handleDeleteUser(e) {

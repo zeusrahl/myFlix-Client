@@ -38,7 +38,7 @@ export class ProfileView extends React.Component {
         Username: response.data.Username,
         Password: response.data.Password,
         Email: response.data.Email,
-        Birthdate: response.data.Birthdate,
+        Birthday: response.data.Birthday,
         FavoriteMovies: response.data.FavoriteMovies,
       });
     })
@@ -119,7 +119,7 @@ export class ProfileView extends React.Component {
     this.Email = input;
   }
 
-  setBirthdate(input) {
+  setBirthday(input) {
     this.Birthday = input;
   }
 
