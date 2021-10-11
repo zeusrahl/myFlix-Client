@@ -108,16 +108,10 @@ export class MainView extends React.Component {
             ))  
           }} />
 
-          <Route path="/users" render={() => {
+          <Route exact path="/users" render={() => {
             if (user) return <Redirect to="/" />
             return <Col>
               <RegistrationView />
-            </Col>
-          }} />
-
-          <Route path="/users/:Username" render={() => {
-            if (!user) return <Col>
-              <ProfileView />
             </Col>
           }} />
 
@@ -158,7 +152,7 @@ export class MainView extends React.Component {
             if (movies.length ===0) return;
             return <ProfileView history={history} movies={movies} />
           }} />
-          
+
         </Row>
       </Router>
       

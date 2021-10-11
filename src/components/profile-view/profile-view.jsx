@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import { Button, Card, CardDeck, Form, Row } from 'react-bootstrap';
+import { Button, Card, CardDeck, Form, Row, Col } from 'react-bootstrap';
 import './profile-view.scss';
 
 export class ProfileView extends React.Component {
@@ -153,7 +153,13 @@ export class ProfileView extends React.Component {
     return (
       <Row className='profile-view'>
         <Card className='profile-card'>
+          <Col>
+          <h2>Username: {`${this.state.Username}`}</h2>
+          <p>Email: {`${this.state.Email}`}</p>
+          <p>Birthday: {`${this.state.Birthday}`}</p>
           <h2>Favorites</h2>
+          </Col>
+          
           <Card.Body>
             {FavoriteMovies.length === 0 && <div className="text-center">Empty</div>}
 
