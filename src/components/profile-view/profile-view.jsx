@@ -164,23 +164,20 @@ export class ProfileView extends React.Component {
             {FavoriteMovies.length === 0 && <div className="text-center">Empty</div>}
 
             <div className='favorite-movies'>
-              {FavoriteMovies.length > 0 && movies.map((movie) => {
-                if (movie._id === FavoriteMovies.find((favMovie) => favMovie === movie._id)) {
+              {FavoriteMovies.length > 0 && FavoriteMovies.map((movie) => {
                   return (
-                    <CardDeck className='movie-card-deck'>
-                      <Card className='favorites-item card-content' style={{ width: '16rem' }} key={movie._id}>
-                        <Card.Img style={{ width: '18rem' }} className='movieCard' variant='top' src={movie.ImagePath} />
-                        <Card.Body>
-                          <Card.Title className='movie-card-title'>{movie.Title}</Card.Title>
-                          <Button size='sm' className='profile-button remove favorite' variant='danger' value={movie._id} onclick={(e) => this.removeFavoriteMovie(e, movie)}>
-                            Remove
-                          </Button>
-                        </Card.Body>
-                      </Card>
-                    </CardDeck>
-                    );
+                    <Card className='favorites-item card-content' style={{ width: '16rem' }} key={movie._id}>
+                      <Card.Img style={{ width: '18rem' }} className='movieCard' variant='top' src={movie.ImagePath} />
+                      <Card.Body>
+                        <Card.Title className='movie-card-title'>{movie.Title}</Card.Title>
+                        <Button size='sm' className='profile-button remove favorite' variant='danger' value={movie._id} onclick={(e) => this.removeFavoriteMovie(e, movie)}>
+                          Remove
+                        </Button>
+                      </Card.Body>
+                    </Card>
+                  );
                 }
-              })}
+              )}
             </div>
           </Card.Body>
 
