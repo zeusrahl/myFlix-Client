@@ -47,26 +47,28 @@ export class ProfileView extends React.Component {
   }
 
 
-  removeFavoriteMovie() {
+  removeFavoriteMovie(e, favMov) {
+    e.preventDefault();
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
 
     axios
-      .delete(`https://favflix.herokuapp.com/users/${user}/movies/${movie._id}`, {
+      .delete(`https://favflix.herokuapp.com/users/${user}/movies/${favMov._id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then(() => {
       alert('Movie was removed');
-      this.componentDidMount();
+      this.getUser(localStorage.getItem('token'));
     })
     .catch(function (error) {
       console.log(error);
+      console.log(favMov);
     })
-    // .then(() => window.location.reload());
   }
 
   handleUpdate(e, newUsername, newPassword, newEmail, newBirthday) {
+    e.preventDefault();
     this.setState({
       validated: null,
     });
@@ -80,7 +82,6 @@ export class ProfileView extends React.Component {
       });
       return;
     }
-    e.preventDefault();
 
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
@@ -108,6 +109,7 @@ export class ProfileView extends React.Component {
     .catch(function (error) {
       console.log(error);
     });
+    console.log(Username, Password, Email, Birthday);
   }
 
   setUsername(input) {
@@ -167,10 +169,10 @@ export class ProfileView extends React.Component {
               {FavoriteMovies.length > 0 && FavoriteMovies.map((movie) => {
                   return (
                     <Card className='favorites-item card-content' style={{ width: '16rem' }} key={movie._id}>
-                      <Card.Img style={{ width: '18rem' }} className='movieCard' variant='top' src={movie.ImagePath} />
+                      <Card.Img style={{ width: '18rem' }} className='movieCard' variant='top' src={movie.ImagePath} crossOrigin='true'/>
                       <Card.Body>
                         <Card.Title className='movie-card-title'>{movie.Title}</Card.Title>
-                        <Button size='sm' className='profile-button remove favorite' variant='danger' value={movie._id} onclick={(e) => this.removeFavoriteMovie(e, movie)}>
+                        <Button size='sm' className='profile-button remove favorite' variant='danger' value={movie._id} onClick={(e) => this.removeFavoriteMovie(e, movie)}>
                           Remove
                         </Button>
                       </Card.Body>
