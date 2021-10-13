@@ -86,14 +86,14 @@ export class ProfileView extends React.Component {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
-    axios.put(`https://favflix.herokuapp.com/users/${user}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      data: {
+    axios.put(`https://favflix.herokuapp.com/users/${user}`, 
+      {
         Username: newUsername ? newUsername: this.state.Username,
         Password: newPassword ? newPassword: this.state.Password,
         Email: newEmail ? newEmail: this.state.Email,
         Birthday: newBirthday ? newBirthday: this.state.Birthday,
       },
+      { headers: { Authorization: `Bearer ${token}` },
     })
     .then((response) => {
       alert('Saved Changes');
@@ -104,12 +104,16 @@ export class ProfileView extends React.Component {
         Birthday: response.data.Birthday,
       });
       localStorage.setItem('user', this.state.Username);
-      window.open(`/users/${user}`, '_self');
+      
     })
     .catch(function (error) {
       console.log(error);
     });
-    console.log(Username, Password, Email, Birthday);
+    window.open(`/users/${user}`, '_self');
+    console.log(Username);
+    console.log(Password);
+    console.log(Email);
+    console.log(Birthday);    
   }
 
   setUsername(input) {
