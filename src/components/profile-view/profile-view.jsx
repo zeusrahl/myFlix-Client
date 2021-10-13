@@ -104,12 +104,11 @@ export class ProfileView extends React.Component {
         Birthday: response.data.Birthday,
       });
       localStorage.setItem('user', this.state.Username);
-      
+      window.open(`/users/${user}`, '_self');
     })
     .catch(function (error) {
       console.log(error);
     });
-    window.open(`/users/${user}`, '_self');
     console.log(Username);
     console.log(Password);
     console.log(Email);
