@@ -1,12 +1,26 @@
 import React from 'react';
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+
+// #0
+import { setMovies } from '../../actions/actions';
+
+
+/*
+  #1 Thes rest of components import statements but without the MovieCard's
+  because it will be importe and used in the MoviesList component rather
+  than in here.
+*/
 
 import './main-view.scss';
 
+// we haven't written this one yet
+import MoviesList from '../movies-list/movies-list';
 import { LoginView } from '../login-view/login-view';
-import { MovieCard } from '../movie-card/movie-card';
+// import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view'
@@ -16,15 +30,16 @@ import { NavBar } from '../navbar-view/navbar-view';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+// import Button from 'react-bootstrap/Button';
 
-export class MainView extends React.Component {
+// #2 export keyword removed from here
+class MainView extends React.Component {
   
   constructor(){
     super();
   // Initial state is set to null
+  // #3 movies state removed from here
     this.state = {
-      movies: [],
       user: null,
     };
   }
@@ -58,7 +73,7 @@ export class MainView extends React.Component {
       this.setState({
         users: response.data
       });
-      console.log(response)
+      console.log(response) 
     })
     .catch(function (error) {
       console.log(error);
@@ -76,10 +91,13 @@ export class MainView extends React.Component {
       headers: { Authorization: `Bearer ${token}`}
     })
     .then(response => {
+
+      // #4
+      this.props.setMovies(response.data);
       // Assign the result to the state
-      this.setState({
+      /* this.setState({
         movies: response.data
-      });
+      });*/
     })
     .catch(function (error) {
       console.log(error);
@@ -87,7 +105,10 @@ export class MainView extends React.Component {
   }
 
   render() {
-    const {movies, user } = this.state;
+
+    // #5 movies is extracted from this.props rather than from this.state
+    let {movies } = this.props;
+    let { user } = this.state;
     console.log('render', user);
 
     return (
@@ -101,11 +122,13 @@ export class MainView extends React.Component {
               <LoginView onLoggedIn={user => this.onLoggedIn(user)} />
             </Col>
             if (movies.length === 0) return <div className="main-view" />;
-            return movies.map(m => (
+            // #6
+            return <MoviesList movies={movies}/>
+            /* return movies.map(m => (
               <Col md={3} key={m._id}>
                 <MovieCard movie={m} />
               </Col>
-            ))  
+            )) */
           }} />
 
           <Route exact path="/users" render={() => {
@@ -159,4 +182,11 @@ export class MainView extends React.Component {
     );
   }
 }
-export default MainView
+
+// #7
+let mapStateToProps = state => {
+  return { movies: state.movies }
+}
+
+// #8
+export default connect(mapStateToProps, { setMovies })(MainView);

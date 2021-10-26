@@ -18,6 +18,29 @@ body {
 .app-container {
   padding: 30px;
 }
+
+.register {
+  padding: 30px;
+  border: 0.3px solid grey;
+  box-shadow: 5px 5px 5px grey;
+  border-radius: 15px;
+}
+
+div {
+  width: 100%;
+}
+
+
+.profile-view {
+  padding: 30px;
+  border: 0.3px solid grey;
+  box-shadow: 5px 5px 5px grey;
+  border-radius: 15px;
+}
+
+.app-container {
+  padding: 30px;
+}
 .image-container {
   position: relative;
   transition: transform 0.2s;
@@ -42,28 +65,5 @@ body {
   font-size: 20px;
   padding: 20px;
   text-align: center;
-}
-
-.register {
-  padding: 30px;
-  border: 0.3px solid grey;
-  box-shadow: 5px 5px 5px grey;
-  border-radius: 15px;
-}
-
-div {
-  width: 100%;
-}
-
-
-.profile-view {
-  padding: 30px;
-  border: 0.3px solid grey;
-  box-shadow: 5px 5px 5px grey;
-  border-radius: 15px;
-}
-
-.app-container {
-  padding: 30px;
 }
 /*# sourceMappingURL=index.caa67093.css.map */
