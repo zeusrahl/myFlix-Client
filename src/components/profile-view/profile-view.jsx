@@ -4,6 +4,12 @@ import axios from 'axios';
 import { Button, Card, CardDeck, Form, Row, Col } from 'react-bootstrap';
 import './profile-view.scss';
 
+import { connect } from 'react-redux';
+
+// #0
+import { setUser } from '../../actions/actions';
+
+
 export class ProfileView extends React.Component {
   constructor() {
     super();
@@ -33,13 +39,8 @@ export class ProfileView extends React.Component {
       headers: { Authorization: `Bearer ${token}` },
     })
     .then((response) => {
-      this.setState({
-        Username: response.data.Username,
-        Password: response.data.Password,
-        Email: response.data.Email,
-        Birthday: response.data.Birthday,
-        FavoriteMovies: response.data.FavoriteMovies,
-      });
+      console.log("GET USER", this.props.setUser, response.data);
+      this.props.setUser(response.data);
     })
     .catch(function (error) {
       console.log(error);
@@ -47,7 +48,7 @@ export class ProfileView extends React.Component {
   }
 
 
-  removeFavoriteMovie() {
+  removeFavoriteMovie(e, movie) {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
@@ -56,9 +57,9 @@ export class ProfileView extends React.Component {
       .delete(`https://favflix.herokuapp.com/users/${user}/movies/${movie._id}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-    .then(() => {
+    .then((response) => {
       alert('Movie was removed');
-      this.componentDidMount();
+      this.props.setUser(response.data);
     })
     .catch(function (error) {
       console.log(error);
@@ -83,27 +84,24 @@ export class ProfileView extends React.Component {
     e.preventDefault();
 
     const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
+    const username = localStorage.getItem('user');
 
-    axios.put(`https://favflix.herokuapp.com/users/${user}`, {
+    const { user } = this.props;
+
+    axios.put(`https://favflix.herokuapp.com/users/${username}`, {
       headers: { Authorization: `Bearer ${token}` },
       data: {
-        Username: newUsername ? newUsername: this.state.Username,
-        Password: newPassword ? newPassword: this.state.Password,
-        Email: newEmail ? newEmail: this.state.Email,
-        Birthday: newBirthday ? newBirthday: this.state.Birthday,
+        Username: newUsername ? newUsername: user.Username,
+        Password: newPassword ? newPassword: user.Password,
+        Email: newEmail ? newEmail: user.Email,
+        Birthday: newBirthday ? newBirthday: user.Birthday,
       },
     })
     .then((response) => {
       alert('Saved Changes');
-      this.setState({
-        Username: response.data.Username,
-        Password: response.data.Password,
-        Email: response.data.Email,
-        Birthday: response.data.Birthday,
-      });
-      localStorage.setItem('user', this.state.Username);
-      window.open(`/users/${user}`, '_self');
+      this.props.setUser(response.data);
+      localStorage.setItem('user', response.data.Username);
+      // window.open(`/users/${user}`, '_self');
     })
     .catch(function (error) {
       console.log(error);
@@ -138,6 +136,7 @@ export class ProfileView extends React.Component {
     .then(() => {
       localStorage.removeItem('user');
       localStorage.removeItem('token');
+      this.props.setUser(null);
       alert('Your account has been deleted.');
       window.open(`/`, '_self');
       })
@@ -148,23 +147,25 @@ export class ProfileView extends React.Component {
 
   render() {
     const { FavoriteMovies, validated } = this.state;
-    const { movies } = this.props;
+    const { movies, user } = this.props;
+    console.log("render", user);
 
     return (
       <Row className='profile-view'>
         <Card className='profile-card'>
           <Col>
-          <h2>Username: {`${this.state.Username}`}</h2>
-          <p>Email: {`${this.state.Email}`}</p>
-          <p>Birthday: {`${this.state.Birthday}`}</p>
+          <h2>Username: {`${user.Username}`}</h2>
+          <p>Email: {`${user.Email}`}</p>
+          <p>Birthday: {`${user.Birthday}`}</p>
           <h2>Favorites</h2>
           </Col>
           
           <Card.Body>
-            {FavoriteMovies.length === 0 && <div className="text-center">Empty</div>}
+            {user.FavoriteMovies.length === 0 && <div className="text-center">Empty</div>}
 
             <div className='favorite-movies'>
-              {FavoriteMovies.length > 0 && FavoriteMovies.map((movie) => {
+              {user.FavoriteMovies.length > 0 && user.FavoriteMovies.map((movie) => {
+                  console.log('MOVIE', movie);
                   return (
                     <Card className='favorites-item card-content' style={{ width: '16rem' }} key={movie._id}>
                       <Card.Img style={{ width: '18rem' }} className='movieCard' variant='top' src={movie.ImagePath} />
@@ -228,12 +229,19 @@ ProfileView.propTypes = {
   user: PropTypes.shape({
     FavoriteMovies: PropTypes.arrayOf(
       PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        Title: PropTypes.string.isRequired,
+        _id: PropTypes.string,
+        Title: PropTypes.string,
       })
     ),
-    Username: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
+    Username: PropTypes.string,
+    Email: PropTypes.string,
     Birthday: PropTypes.string,
   }),
 };
+
+let mapStateToProps = state => {
+  return { movies: state.movies, user: state.user }
+}
+
+// #8
+export default connect(mapStateToProps, { setUser })(ProfileView);

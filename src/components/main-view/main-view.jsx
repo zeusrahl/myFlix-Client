@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 
 // #0
-import { setMovies } from '../../actions/actions';
+import { setMovies, setUser } from '../../actions/actions';
 
 
 /*
@@ -21,11 +21,11 @@ import './main-view.scss';
 import MoviesList from '../movies-list/movies-list';
 import { LoginView } from '../login-view/login-view';
 // import { MovieCard } from '../movie-card/movie-card';
-import { MovieView } from '../movie-view/movie-view';
+import MovieView from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view'
 import { RegistrationView } from '../registration-view/registration-view';
-import { ProfileView } from '../profile-view/profile-view';
+import ProfileView from '../profile-view/profile-view';
 import { NavBar } from '../navbar-view/navbar-view';
 
 import Row from 'react-bootstrap/Row';
@@ -47,32 +47,26 @@ class MainView extends React.Component {
   componentDidMount() {
     let accessToken = localStorage.getItem('token');
     if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem('user')
-      });
+      this.getUser(accessToken, localStorage.getItem('user'));
       this.getMovies(accessToken);
     }
   }
 
   onLoggedIn(authData) {
     console.log(authData);
-    this.setState({
-      user: authData.user.Username
-    });
+    this.props.setUser(authData.user);
 
     localStorage.setItem('token', authData.token);
     localStorage.setItem('user', authData.user.Username);
     this.getMovies(authData.token);
   }
 
-  getUsers(token) {
-    axios.post('https://favflix.herokuapp.com/users', {
+  getUser(token, username) {
+    axios.get(`https://favflix.herokuapp.com/users/${username}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
-      this.setState({
-        users: response.data
-      });
+      this.props.setUser(response.data);
       console.log(response) 
     })
     .catch(function (error) {
@@ -107,8 +101,7 @@ class MainView extends React.Component {
   render() {
 
     // #5 movies is extracted from this.props rather than from this.state
-    let {movies } = this.props;
-    let { user } = this.state;
+    let { movies, user } = this.props;
     console.log('render', user);
 
     return (
@@ -185,8 +178,8 @@ class MainView extends React.Component {
 
 // #7
 let mapStateToProps = state => {
-  return { movies: state.movies }
+  return { movies: state.movies, user: state.user }
 }
 
 // #8
-export default connect(mapStateToProps, { setMovies })(MainView);
+export default connect(mapStateToProps, { setMovies, setUser })(MainView);

@@ -23,7 +23,7 @@ function movies(state = [], action) {
 function user(state = {FavoriteMovies:[]}, action) {
   switch (action.type) {
     case SET_USER:
-      return action.user;
+      return action.value;
     default:
       return state;
   }

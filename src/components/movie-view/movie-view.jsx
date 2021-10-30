@@ -4,6 +4,11 @@ import PropTypes from 'prop-types';
 import { Link } from "react-router-dom";
 import axios from 'axios';
 
+import { connect } from 'react-redux';
+
+// #0
+import { setUser } from '../../actions/actions';
+
 import './movie-view.scss';
 
 export class MovieView extends React.Component {
@@ -28,6 +33,7 @@ export class MovieView extends React.Component {
       headers: { Authorization: `Bearer ${token}` }
     })
     .then(response => {
+      this.props.setUser(response.data);
       alert(`Added to Favorites List`)
     })
     .catch(function (error) {
@@ -36,12 +42,12 @@ export class MovieView extends React.Component {
   };
 
   render() {
-    const { movie, onBackClick } = this.props;
+    const { movie, onBackClick, user } = this.props;
 
     return (
       <div className="movie-view">
         <div className="movie-poster">
-          <img src={movie.ImagePath} alt="Display Image" />
+          <img src={movie.ImagePath} alt="Display Image"  crossOrigin='true' />
         </div>
         <div className="movie-title">
           <span className="label">Title: </span>
@@ -64,7 +70,7 @@ export class MovieView extends React.Component {
           <span className="value">{movie.Director.Name}</span>
         </div>
 
-        <Button variant='danger' className='fav-button' value={movie._id} onClick={(e) => this.addFavorite(e, movie)}>
+        <Button variant='danger' disabled={user.FavoriteMovies.find((m) => m._id == movie._id)} className='fav-button' value={movie._id} onClick={(e) => this.addFavorite(e, movie)}>
           Add to Favorites
         </Button>
         <Button variant='primary' onClick= {() => {onBackClick(null); }}>
@@ -89,3 +95,10 @@ MovieView.propTypes = {
     })
   }).isRequired
 };
+
+let mapStateToProps = state => {
+  return { movies: state.movies, user: state.user }
+}
+
+// #8
+export default connect(mapStateToProps, { setUser })(MovieView);
