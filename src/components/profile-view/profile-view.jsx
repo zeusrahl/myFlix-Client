@@ -24,30 +24,8 @@ export class ProfileView extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.getUser(accessToken);
-    }
-  }
-
-
-  // get user method
-  getUser(token) {
-    const user = localStorage.getItem('user');
-    axios.get(`https://favflix.herokuapp.com/users/${user}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then((response) => {
-      console.log("GET USER", this.props.setUser, response.data);
-      this.props.setUser(response.data);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
-
+  
+  
   removeFavoriteMovie(e, movie) {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
@@ -165,7 +143,7 @@ export class ProfileView extends React.Component {
 
             <div className='favorite-movies'>
               {user.FavoriteMovies.length > 0 && user.FavoriteMovies.map((movie) => {
-                  console.log('MOVIE', movie);
+                  // console.log('MOVIE', movie);
                   return (
                     <Card className='favorites-item card-content' style={{ width: '16rem' }} key={movie._id}>
                       <Card.Img style={{ width: '18rem' }} className='movieCard' variant='top' src={movie.ImagePath} />
@@ -233,9 +211,9 @@ ProfileView.propTypes = {
         Title: PropTypes.string,
       })
     ),
-    Username: PropTypes.string,
-    Email: PropTypes.string,
-    Birthday: PropTypes.string,
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
   }),
 };
 
