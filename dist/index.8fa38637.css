@@ -63,6 +63,9 @@ div {
 .app-container {
   padding: 30px;
 }
+.navbar-nav a {
+  margin-right: 18px;
+}
 .my-flix {
   color: steelblue;
 }
