@@ -42,7 +42,11 @@ This project was built using **React**, using the code and REST API and Database
 
 ## Built With
 
-React
-React Redux
-React Bootstrap
-Parcel
+- React
+- React Redux
+- React Bootstrap
+- Parcel
+
+## Website:
+
+https://edk-myflix-client.netlify.app/
