@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "start": "parcel src/index.html",
-    "build": "parcel build src/index.html",
+    "predeploy": "rm -rf dist && parcel build ./*.html --public-url https://zeusrahl.github.io/myFlix-Client",
+    "build": "gh-pages -d dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
